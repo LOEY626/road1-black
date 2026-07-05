@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Loey Routebook - 重庆→四川→甘肃</title>
+<link rel="stylesheet" href="lib/leaflet.css">
+<script src="lib/leaflet.js"></script>
+<link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
+</head>
+<body>
+<div class="toast" id="toast"><span class="toast-msg" id="toastMsg"></span></div>
+<nav class="bottom-nav" id="bottomNav">
+  <a href="#hero" class="nav-item active" data-section="hero"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>首页</span></a>
+    <div class="glitch-wrap" style="margin-top:20px"><span class="glitch-text" data-text="never stop walking">never stop walking</span></div>
+  <a href="#overview" class="nav-item" data-section="overview"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>路线</span></a>
+  <a href="#map" class="nav-item" data-section="map"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6v16l7-4 8 4 7-4V2l-7 4-8-4-7 4z"/><path d="M8 2v16"/><path d="M16 6v16"/></svg><span>地图</span></a>
+  <a href="#itinerary" class="nav-item" data-section="itinerary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg><span>行程</span></a>
+  <a href="#gear" class="nav-item" data-section="gear"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg><span>装备</span></a>
+  <a href="#safety" class="nav-item" data-section="safety"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>安全</span></a>
+</nav>
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">&#9670; PROJECT NORTH &middot; v1.0</div>
+    <div class="hero-label">Loey's Routebook</div>
+    <div class="hero-title-wrapper">
+      <h1 class="hero-title">重庆→四川→甘肃<br>355km 穿越</h1>
+    </div>
+    <p class="hero-subtitle">北碚·剑门·太子山·黄河</p>
+    <div class="hero-meta">14天 · 徒步355km · 接驳~700km · 7月</div>
+    <p class="hero-tagline">你可以你可以！！</p>
+  <a class="hero-btn" href="#itinerary">查看每日行程</a>
+  </div>
+</section>
+<section class="section" id="overview">
+  <div class="section-inner">
+    <h2 class="section-title">Route Overview</h2>
+    <p class="section-subtitle">路线总览</p>
+    <div class="stats-grid">
+      <div class="stat-card"><div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><div class="stat-value" id="statDays">14</div><div class="stat-label">总天数</div></div>
+      <div class="stat-card"><div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="stat-value" id="statTotalKm">355</div><div class="stat-label">徒步(km)</div></div>
+      <div class="stat-card"><div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="stat-value" id="statWalkingDays">12</div><div class="stat-label">徒步日</div></div>
+      <div class="stat-card"><div class="stat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 1v3"/><path d="M15 1v3"/><path d="M9 12l2 2 4-4"/></svg></div><div class="stat-value" id="statTransitDays">2</div><div class="stat-label">接驳日</div></div>
+    </div>
+    <div class="overview-cards">
+      <div class="overview-card"><div class="overview-card-label">出发</div><div class="overview-card-value">重庆北碚区·兼善中学</div></div>
+      <div class="overview-card"><div class="overview-card-label">终点</div><div class="overview-card-value">甘肃兰州·七里河区</div></div>
+      <div class="overview-card"><div class="overview-card-label">三省徒步</div><div class="overview-card-value">重庆113km + 四川120km + 甘肃122km</div></div>
+      <div class="overview-card"><div class="overview-card-label">接驳</div><div class="overview-card-value">潼南→广元(动车)·梓潼→临夏(火车)·积石山→兰州(班车)</div></div>
+      <div class="overview-card"><div class="overview-card-label">每日节奏</div><div class="overview-card-value">5:00-10:00(15-20km)→午休→16:00-19:00(10-15km)</div></div>
+      <div class="overview-card"><div class="overview-card-label">策略</div><div class="overview-card-value">国道/乡道，避高速和长隧道，天黑前住下</div></div>
+    </div>
+    <a href="https://www.windy.com/?lat=33.5,105.0,6" target="_blank" class="hero-btn" style="display:inline-block;margin-top:12px;padding:10px 28px;font-size:.82rem">全程天气 → Windy</a>
+    <div class="disclaimer-banner"><strong>重要声明</strong><p>路线为规划示意，出行前须逐日核验。</p></div>
+</section>
+<section class="section map-section" id="map">
+  <div class="section-inner"><h2 class="section-title">Interactive Map</h2><p class="section-subtitle">交互地图</p></div>
+  <div class="map-container" id="mapContainer"><div id="routeMap"></div></div>
+</section>
+<section class="section" id="itinerary">
+  <div class="section-inner">
+    <div class="itinerary-toolbar">
+      <h2 class="section-title" style="margin-bottom:0">Daily Itinerary</h2>
+      <div class="itinerary-actions">
+        
+        <button class="action-btn" id="btnCopy"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>复制</span></button>
+        <button class="action-btn" id="btnExport"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>导出</span></button>
+    <p class="section-subtitle" style="margin-top:4px">每日行程</p>
+    <div class="progress-bar-wrapper">
+      <div class="progress-stats"><span id="progressCompleted">0</span>% · <span id="progressCompletedKm">0</span>km · <span id="progressRemainingKm">355</span>km</div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-milestones"><span>重庆出发</span><span>入川</span><span>入甘</span><span>兰州抵达</span></div>
+    <div class="itinerary-list" id="itineraryList"></div>
+    <div class="itinerary-empty" id="itineraryEmpty"><p>点击左上角生成路线</p></div>
+</section>
+<section class="section" id="gear">
+  <div class="section-inner">
+    <h2 class="section-title">Gear Checklist</h2>
+    <p class="section-subtitle">装备清单</p>
+    <div class="gear-container" id="gearContainer"></div>
+    <div class="gear-note gear-warning"><strong>重量提醒</strong><p>30L+10L负重较高，每天检查肩颈腰膝脚掌。</p></div>
+    <div class="gear-note gear-tip"><strong>轻量化</strong><p>接驳日前整理摄影设备、电源、证件、药品。</p></div>
+</section>
+<section class="section" id="food">
+  <div class="section-inner">
+    <h2 class="section-title">Food Plan</h2>
+    <p class="section-subtitle">路餐计划</p>
+    <div class="food-grid">
+      <div class="food-card"><h3>早餐</h3><p>便利店采购：牛奶、面包、鸡蛋。</p></div>
+      <div class="food-card"><h3>午餐(路餐)</h3><p>馒头、压缩饼干、鸡胸肉、卤牛肉、能量胶。</p></div>
+      <div class="food-card"><h3>晚餐</h3><p>到达后吃热食，品尝当地特色。</p></div>
+      <div class="food-card"><h3>补给</h3><p>电解质冲剂、盐丸、葡萄糖、巧克力、坚果。</p></div>
+    <div class="food-reminder"><p>不露营，天黑前到住宿点。</p></div>
+</section>
+<section class="section" id="checklist">
+  <div class="section-inner">
+    <h2 class="section-title">Daily Safety Checklist</h2>
+    <p class="section-subtitle">出发前检查</p>
+    <div class="checklist-container" id="checklistContainer">
+      <div class="checklist-card">
+        <div class="checklist-card-header"><span class="checklist-card-title">安全检查</span><span class="checklist-card-progress"><span id="checklistProgress">0</span>/<span id="checklistTotal">8</span></span></div>
+        <div class="checklist-items">
+          <label class="checklist-item" data-key="c1"><input type="checkbox"><span class="checklist-check"></span><span class="checklist-text">查看今日天气</span></label>
+          <label class="checklist-item" data-key="c2"><input type="checkbox"><span class="checklist-check"></span><span class="checklist-text">确认今晚住宿点</span></label>
+          <label class="checklist-item" data-key="c3"><input type="checkbox"><span class="checklist-check"></span><span class="checklist-text">检查补给</span></label>
+          <label class="checklist-item" data-key="c4"><input type="checkbox"><span class="checklist-check"></span><span class="checklist-text">确认路线安全</span></label>
+          <label class="checklist-item" data-key="c5"><input type="checkbox"><span class="checklist-check"></span><span class="checklist-text">确认交通接驳</span></label>
+          <label class="checklist-item" data-key="c6"><input type="checkbox"><span class="checklist-check"></span><span class="checklist-text">给家人发定位</span></label>
+          <label class="checklist-item" data-key="c7"><input type="checkbox"><span class="checklist-check"></span><span class="checklist-text">检查身体状态</span></label>
+          <label class="checklist-item" data-key="c8"><input type="checkbox"><span class="checklist-check"></span><span class="checklist-text">无人机确认禁飞区</span></label>
+</section>
+<section class="section" id="safety">
+  <div class="section-inner">
+    <h2 class="section-title">Safety Guide</h2>
+    <p class="section-subtitle">安全指南</p>
+    <div class="safety-list">
+      <div class="safety-item"><div class="safety-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><p>女生独行避免夜路，<strong>天黑前必到住宿地</strong></p></div>
+      <div class="safety-item"><div class="safety-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div><p>不走高速、不走长隧道</p></div>
+      <div class="safety-item"><div class="safety-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><p>每天给家人发定位</p></div>
+      <div class="safety-item"><div class="safety-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><p><strong>安全优先于路线完成</strong></p></div>
+</section>
+<section class="section summary-section" id="summary">
+  <div class="section-inner">
+    <h2 class="section-title summary-title">你可以你可以！！</h2>
+    <div class="summary-content">
+      <p>这不是一场为了证明什么的徒步，而是一次把自己交还给路、风和山河的练习。</p>
+      <p>重庆北碚→潼南→广元入蜀→剑门蜀道→梓潼→火车入甘→太子山高原→兰州七里河。</p>
+      <p>14天，三省，355km徒步，700km接驳，三种风景。</p>
+      <p class="summary-footer">向北走，慢慢走。</p>
+    <div class="summary-route-line">
+      <span class="route-dot start"></span><span class="route-line-bar"></span><span class="route-dot mid"></span><span class="route-line-bar"></span><span class="route-dot end"></span>
+      <div class="route-labels"><span>重庆</span><span>蜀道</span><span>兰州</span></div>
+</section>
+<button class="back-to-top" id="backToTop"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg></button>
+<div class="toast" id="toast"></div>
+<script src="script.js"></script>
+<script>if("serviceWorker"in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js");})}</script>
+
+</body>
+</html>
+
